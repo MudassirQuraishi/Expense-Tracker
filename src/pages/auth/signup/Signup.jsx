@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -139,7 +139,7 @@ const Signup = () => {
                     </div>
                 </div>
                 <p className={classes['toggle-links']}>
-                    Already have an account? <span> Sign in here</span></p>
+                    Already have an account? <Link to={'/login'} > <span> Sign in here</span></Link></p>
             </div>
         </div>
     );

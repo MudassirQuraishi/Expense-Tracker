@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
 import classes from './Login.module.css';
@@ -127,7 +127,7 @@ const Login = () => {
                     </div>
                 </div>
                 <p className={classes['toggle-links']}>
-                    <span>Create an account</span></p>
+                    Dont have an account? <Link to={'/signup'}><span> Create an account</span></Link> </p>
             </div>
         </div>
     );
