@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -7,6 +8,7 @@ import classes from './Signup.module.css';
 
 
 const Signup = () => {
+    const navigate = useNavigate();
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const checkRef = useRef('');
@@ -74,8 +76,9 @@ const Signup = () => {
             const response = await axios.post('http://localhost:8080/auth/signup', signinData)
             console.log(response)
             if (response.status === 201) {
-                toast.success('Logged in successfully');
+                toast.success('Signup successful');
                 clearForm();
+                navigate('/login');
             }
         }
         catch (error) {
@@ -87,6 +90,7 @@ const Signup = () => {
                 case 409:
                     toast.warn('User already exists, continue to login');
                     clearForm();
+                    navigate('/login');
                     break;
                 case 500:
                     toast.error('Something went wrong, please try again');

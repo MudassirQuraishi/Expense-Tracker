@@ -1,15 +1,17 @@
 import { useRef, useState } from 'react';
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
-import classes from './Signup.module.css';
+import classes from './Login.module.css';
 
 
-const Signup = () => {
+const Login = () => {
+    const navigate = useNavigate();
     const emailRef = useRef('');
     const passwordRef = useRef('');
-    const checkRef = useRef('');
+    const termsCheckboxRef = useRef(null);
     const [errors, setErrors] = useState({
         email: false,
         password: false,
@@ -48,23 +50,26 @@ const Signup = () => {
     const clearForm = () => {
         emailRef.current.value = '';
         passwordRef.current.value = '';
-        checkRef.current.value = '';
     }
     const handleSubmit = async () => {
-        if (errors.email || errors.password || errors.check) {
+        if (errors.email || errors.password || !termsCheckboxRef.current.checked) {
             console.log('Please fill valid details')
             return;
         }
         try {
             const signinData = {
                 email: emailRef.current.value,
-                password: passwordRef.current.value
+                password: passwordRef.current.value,
+                keepLoggedIn: termsCheckboxRef.current.value,
             }
-            const response = await axios.post('http://localhost:8080/auth/signup', signinData)
+            const response = await axios.post('http://localhost:8080/auth/login', signinData)
             console.log(response)
-            if (response.status === 201) {
-                toast.success('Logged in successfully');
+            if (response.status === 200) {
+                toast.success('Login successful');
                 clearForm();
+                localStorage.setItem('auth-token', response.data.encryptedId)
+                navigate('/');
+
             }
         }
         catch (error) {
@@ -73,9 +78,10 @@ const Signup = () => {
                 case 400:
                     toast.error('Invalid credentials, please try again');
                     break;
-                case 409:
-                    toast.warn('User already exists, continue to login');
+                case 404:
+                    toast.warn('User not found, please signup first');
                     clearForm();
+                    navigate('/signup')
                     break;
                 case 500:
                     toast.error('Something went wrong, please try again');
@@ -110,8 +116,11 @@ const Signup = () => {
                                 </div>
                             </div>
                             <div className={`${classes['form-actions']} ${errors.final && classes.error}`} >
-                                <input type="checkbox" name="" id="" />
-                                <span>Keep me Logged in</span>
+                                <div>
+                                    <input type="checkbox" name="terms-of-use" id="terms-of-use" ref={termsCheckboxRef} />
+                                    <span>Keep me Logged in</span>
+                                </div>
+
                                 <button onClick={handleSubmit} disabled={errors.email || errors.password || errors.check}>Login</button>
                             </div>
                         </div>
@@ -124,4 +133,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default Login;
