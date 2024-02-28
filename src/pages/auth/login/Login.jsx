@@ -60,10 +60,11 @@ const Login = () => {
             const signinData = {
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
-                keepLoggedIn: termsCheckboxRef.current.value,
+                keepLoggedIn: termsCheckboxRef.current.value === 'on' ? true : false,
             }
+
             const response = await axios.post('http://localhost:8080/auth/login', signinData)
-            console.log(response)
+
             if (response.status === 200) {
                 toast.success('Login successful');
                 clearForm();

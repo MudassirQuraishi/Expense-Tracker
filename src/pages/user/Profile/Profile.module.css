@@ -1,0 +1,105 @@
+.container {
+    position: fixed;
+    margin-top: 6.625rem;
+    margin-left: 19rem;
+    width: 68.75rem;
+    height: 40.625rem;
+}
+
+.container h2 {
+    margin: 0;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: gray;
+}
+
+.outer-container {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    width: 100%;
+    height: 6.25rem;
+}
+
+.menu-links {
+    padding: 2.5rem 3.75rem;
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3.75rem;
+}
+
+.menu-link {
+    cursor: pointer;
+}
+
+.menu-link hr {
+    display: none;
+    background: #439d91;
+    height: 0.125rem;
+    border-radius: 0.625rem;
+    outline: none;
+    border: none;
+}
+
+.menu-link:hover hr {
+    display: none;
+}
+
+.menu-link hr.active {
+    display: block;
+}
+
+.left-container form {
+    padding: 2.375rem 3.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5625rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 25rem;
+}
+
+.input-group label {
+    width: 7.5rem;
+}
+
+.input-group input {
+    width: 15.625rem;
+    height: 2.1875rem;
+    outline: none;
+    border: none;
+    background: #f4f5f7;
+}
+
+.input-group input:disabled {
+    cursor: not-allowed;
+}
+
+.input-group input[type="file"] {
+    background: white;
+}
+
+.form-action {
+    align-self: center;
+}
+
+.form-action button {
+    height: 2.5rem;
+    width: 7.5rem;
+    outline: none;
+    border: 0.0625rem solid transparent;
+    background: #439d91;
+    border-radius: 0.25rem;
+    color: white;
+}
