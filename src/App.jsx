@@ -10,12 +10,12 @@ import Header from './layout/header/Header';
 function App() {
     const NavbarWrapper = () => {
         const { pathname } = useLocation();
-        const publicPaths = ["/login", "/signup"];
+        const publicPaths = ["/login", "/signup", "/"];
         return !publicPaths.includes(pathname) && <Navbar />;
     };
     const HeaderWrapper = () => {
         const { pathname } = useLocation();
-        const publicPaths = ["/login", "/signup"];
+        const publicPaths = ["/login", "/signup", "/"];
         return !publicPaths.includes(pathname) && <Header />;
     };
 
@@ -27,7 +27,8 @@ function App() {
                 <Routes>
                     <Route path='/signup' element={<Signup />} />
                     <Route path='/login' element={<Login />} />
-                    <Route path='/profile' element={<Profile />} />
+                    <Route path='/settings' element={<Profile />} />
+                    <Route path="/" element={<Login />} />
                 </Routes>
             </BrowserRouter>
             <ToastContainer

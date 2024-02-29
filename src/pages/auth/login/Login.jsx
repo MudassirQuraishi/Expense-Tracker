@@ -1,14 +1,17 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, } from 'react';
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate, Link } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
 import classes from './Login.module.css';
+import { useUserContext } from '../../../utilities/customHooks/UserContextHook'
+
 
 
 const Login = () => {
     const navigate = useNavigate();
+    const { setToken } = useUserContext();
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const termsCheckboxRef = useRef(null);
@@ -52,7 +55,7 @@ const Login = () => {
         passwordRef.current.value = '';
     }
     const handleSubmit = async () => {
-        if (errors.email || errors.password || !termsCheckboxRef.current.checked) {
+        if (errors.email || errors.password) {
             console.log('Please fill valid details')
             return;
         }
@@ -68,9 +71,13 @@ const Login = () => {
             if (response.status === 200) {
                 toast.success('Login successful');
                 clearForm();
-                localStorage.setItem('auth-token', response.data.encryptedId)
-                navigate('/');
-
+                setToken(response.data.encryptedId)
+                if (response.data.isFirstTimeUser) {
+                    navigate('/settings');
+                }
+                else {
+                    navigate('/home');
+                }
             }
         }
         catch (error) {
@@ -78,6 +85,9 @@ const Login = () => {
             switch (error.response.status) {
                 case 400:
                     toast.error('Invalid credentials, please try again');
+                    break;
+                case 403:
+                    toast.warn('Please verify your email before logging in')
                     break;
                 case 404:
                     toast.warn('User not found, please signup first');

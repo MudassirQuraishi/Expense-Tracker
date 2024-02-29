@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import classes from './Navbar.module.css'
 import { PiSquaresFour } from "react-icons/pi";
 import { CiWallet } from "react-icons/ci";
@@ -11,14 +11,23 @@ import { RiSettings4Line } from "react-icons/ri";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
 import dummyImage from '../../assets/images/blank-profile-picture-973460_640.webp'
+import { useUserContext } from '../../utilities/customHooks/UserContextHook';
 
 
 const Navbar = () => {
     const [activeLink, setActiveLink] = useState('Overview');
-
+    const { userDetails, removeToken } = useUserContext()
+    const navigate = useNavigate();
     const handleLinkClick = (link) => {
         setActiveLink(link);
     };
+    const logoutHandler = () => {
+        const result = window.confirm('Are you sure you want to log out');
+        if (result) {
+            removeToken();
+            navigate('/login');
+        }
+    }
     return <>
         <div className={classes["navbar-container"]}>
             <div className={classes["logo-menu"]}>
@@ -41,17 +50,17 @@ const Navbar = () => {
                     <li className={`${classes['menu-link']} ${activeLink === 'Goals' ? classes.active : ''
                         }`} onClick={() => handleLinkClick('Goals')}><GoGoal />Goals</li>
                     <li className={`${classes['menu-link']} ${activeLink === 'Settings' ? classes.active : ''
-                        }`} onClick={() => handleLinkClick('Settings')}><RiSettings4Line /> <Link to={'/profile'}>Settings</Link> </li>
+                        }`} onClick={() => handleLinkClick('Settings')}><RiSettings4Line /> <Link to={'/settings'}>Settings</Link> </li>
                 </ul>
             </div>
             <div className={classes["nav-footer"]}>
                 <ul className={classes["logout-container"]}>
-                    <li className={classes["logout-link"]}><IoIosLogOut />Logout</li>
+                    <li className={classes["logout-link"]} onClick={logoutHandler} ><IoIosLogOut />Logout</li>
 
                 </ul>
                 <div className={classes["profile-container"]}>
                     <div className={classes["name-image"]}>
-                        <img src={dummyImage} alt="" />
+                        <img src={userDetails.profilePhoto || dummyImage} alt="" />
                         <div className={classes.name}>
                             <h3>Name</h3>
                             <p>View Profile</p>

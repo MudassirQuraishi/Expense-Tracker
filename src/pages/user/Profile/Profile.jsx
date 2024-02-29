@@ -1,17 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import classes from './Profile.module.css';
 import Resizer from 'react-image-file-resizer';
+import { useUserContext } from '../../../utilities/customHooks/UserContextHook';
 
 const Profile = () => {
-    const token = localStorage.getItem('auth-token')
+    const { userDetails, updateUserData } = useUserContext();
     const [activeLink, setActiveLink] = useState('Account');
-    const [userData, setUserData] = useState({
-        fullname: '',
-        email: '',
-        username: '',
-        phoneNumber: '',
-    });
 
     const fullNameRef = useRef();
     const emailRef = useRef();
@@ -48,22 +42,15 @@ const Profile = () => {
         const resizedImage = await resizeImage(file, 800, 600);
         imageRef.current = resizedImage;
     };
+
     useEffect(() => {
-        const fetchDataFromServer = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/api/userData', { headers: { Authorization: token } });
-                setUserData(response.data.userData);
-                const { email, fullname, phoneNumber, username } = response.data.userData;
-                emailRef.current.value = email;
-                fullNameRef.current.value = fullname;
-                phoneNumberRef.current.value = phoneNumber;
-                usernameRef.current.value = username;
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchDataFromServer();
-    }, [token]);
+        const { email, fullname, phoneNumber, username } = userDetails;
+        emailRef.current.value = email || '';
+        fullNameRef.current.value = fullname || '';
+        phoneNumberRef.current.value = phoneNumber || '';
+        usernameRef.current.value = username || '';
+    }, [userDetails])
+
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -74,19 +61,7 @@ const Profile = () => {
                 profilePhoto: imageRef.current,
                 email: emailRef.current.value,
             };
-
-
-            const response = await axios.post(
-                'http://localhost:8080/api/update-profile',
-                updatedUserData,
-                {
-                    headers: {
-                        Authorization: token,
-
-                    },
-                }
-            );
-            console.log(response);
+            updateUserData(updatedUserData)
         } catch (error) {
             console.error(error);
         }
@@ -110,19 +85,19 @@ const Profile = () => {
                             <form onSubmit={onSubmitHandler}>
                                 <div className={classes["input-group"]}>
                                     <label htmlFor="">Full name</label>
-                                    <input type="text" name='full-name' ref={fullNameRef} defaultValue={userData.fullname || ''} />
+                                    <input type="text" name='full-name' ref={fullNameRef} defaultValue={userDetails.fullname || ''} />
                                 </div>
                                 <div className={classes["input-group"]}>
                                     <label htmlFor="">Email</label>
-                                    <input type="email" disabled ref={emailRef} defaultValue={userData.email || ''} />
+                                    <input type="email" disabled ref={emailRef} defaultValue={userDetails.email || ''} />
                                 </div>
                                 <div className={classes["input-group"]}>
                                     <label htmlFor="">User name</label>
-                                    <input type="text" ref={usernameRef} defaultValue={userData.username || ''} />
+                                    <input type="text" ref={usernameRef} defaultValue={userDetails.username || ''} />
                                 </div>
                                 <div className={classes["input-group"]}>
                                     <label htmlFor="">Phone Number</label>
-                                    <input type="tel" ref={phoneNumberRef} defaultValue={userData.phoneNumber || ''} />
+                                    <input type="tel" ref={phoneNumberRef} defaultValue={userDetails.phoneNumber || ''} />
                                 </div>
                                 <div className={classes["input-group"]}>
                                     <label htmlFor="">Profile Picture</label>
