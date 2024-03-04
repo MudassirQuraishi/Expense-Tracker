@@ -4,29 +4,22 @@ import { toast } from 'react-toastify'
 import { useNavigate, Link } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
-import classes from './Login.module.css';
-import { useUserContext } from '../../../utilities/customHooks/UserContextHook'
+import classes from './ForgotPassword.module.css';
+// import { useUserContext } from '../../../utilities/customHooks/UserContextHook'
 
 
 
-const Login = () => {
-    const navigate = useNavigate();
-    const { setToken } = useUserContext();
+const ForgotPassword = () => {
+    const navigate = useNavigate()
     const emailRef = useRef('');
-    const passwordRef = useRef('');
-    const termsCheckboxRef = useRef(null);
     const [errors, setErrors] = useState({
         email: false,
-        password: false,
 
     });
     const [tooltip, setTooltip] = useState({
         email: '',
         password: '',
     });
-
-
-
     const validateEmail = (e) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isEmailValid = emailRegex.test(e.target.value);
@@ -39,23 +32,11 @@ const Login = () => {
         });
     };
 
-    const validatePassword = (e) => {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        const isValidPassword = passwordRegex.test(e.target.value);
 
-        setErrors((prevData) => {
-            return { ...prevData, password: !isValidPassword };
-        });
-        setTooltip((prevTooltip) => {
-            return { ...prevTooltip, password: isValidPassword ? '' : 'Password requirements not met' };
-        });
-    };
 
-    const passwordCriteria = errors.password ? <small>Alpha Numeric, one special character,Minimum length of 8 characters</small> : <small></small>
 
     const clearForm = () => {
         emailRef.current.value = '';
-        passwordRef.current.value = '';
     }
     const handleSubmit = async () => {
         if (errors.email || errors.password) {
@@ -63,24 +44,15 @@ const Login = () => {
             return;
         }
         try {
-            const signinData = {
+            const passwordResetData = {
                 email: emailRef.current.value,
-                password: passwordRef.current.value,
-                keepLoggedIn: termsCheckboxRef.current.value === 'on' ? true : false,
             }
 
-            const response = await axios.post('http://localhost:8080/auth/login', signinData)
+            const response = await axios.post('http://localhost:8080/auth/reset-password', passwordResetData)
 
-            if (response.status === 200) {
-                toast.success('Login successful');
+            if (response.status === 201) {
+                toast.success('Password reset link sent successfully. Please check your mail');
                 clearForm();
-                setToken(response.data.encryptedId)
-                if (response.data.isFirstTimeUser) {
-                    navigate('/settings');
-                }
-                else {
-                    navigate('/home');
-                }
             }
         }
         catch (error) {
@@ -116,35 +88,28 @@ const Login = () => {
                     </div>
                     <div className={classes['input-container']}>
                         <div className={classes['form-container']}>
+                            <div className={classes["text-container"]}>
+                                <h2>Forgot Password?</h2>
+                                <p>Enter your email address to get the password reset link</p>
+                            </div>
                             <div className={`${classes['form-control']} ${classes['tooltip-container']}`}>
                                 <div className={`${classes['form-group']} ${errors.email && classes.error}`}>
                                     <label htmlFor="">Email</label>
                                     <input type="email" placeholder="Enter your email" ref={emailRef} onBlur={validateEmail} />
                                     {errors.email && <Tooltip message={tooltip.email} />}
                                 </div>
-                                <div className={`${classes['form-group']} ${classes["password"]} ${errors.password && classes.error}`}>
-                                    <label htmlFor="">Password  <Link to={'/forgot-password'}> <span>ForgotPassword?</span></Link></label>
-                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} />
-                                    {passwordCriteria}
-                                    {errors.password && < Tooltip message={tooltip.password} />}
-                                </div>
                             </div>
                             <div className={`${classes['form-actions']} ${errors.final && classes.error}`} >
-                                <div>
-                                    <input type="checkbox" name="terms-of-use" id="terms-of-use" ref={termsCheckboxRef} />
-                                    <span>Keep me Logged in</span>
-                                </div>
-
-                                <button onClick={handleSubmit} disabled={errors.email || errors.password || errors.check}>Login</button>
+                                <button onClick={handleSubmit} disabled={errors.email || errors.password || errors.check}>Reset Password</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <p className={classes['toggle-links']}>
-                    Dont have an account? <Link to={'/signup'}><span> Create an account</span></Link> </p>
+                    <Link to={'/login'}><span> Back to login</span></Link> </p>
             </div>
         </div>
     );
 };
 
-export default Login;
+export default ForgotPassword;

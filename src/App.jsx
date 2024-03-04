@@ -6,17 +6,24 @@ import Login from './pages/auth/login/Login';
 import Navbar from './layout/navbar/Navbar';
 import Profile from './pages/user/Profile/Profile';
 import Header from './layout/header/Header';
+import ForgotPassword from './pages/auth/forgot_password/ForgotPassword';
+import ResetPassword from './pages/auth/reset-password/ResetPassword';
 
 function App() {
     const NavbarWrapper = () => {
         const { pathname } = useLocation();
-        const publicPaths = ["/login", "/signup", "/"];
-        return !publicPaths.includes(pathname) && <Navbar />;
+        const publicPaths = ["/login", "/signup", "/", "/forgot-password"];
+        const resetPasswordRegex = /^\/reset-password\/[^/]+/;
+
+        return !publicPaths.includes(pathname) && !resetPasswordRegex.test(pathname) && <Navbar />;
     };
+
     const HeaderWrapper = () => {
         const { pathname } = useLocation();
-        const publicPaths = ["/login", "/signup", "/"];
-        return !publicPaths.includes(pathname) && <Header />;
+        const publicPaths = ["/login", "/signup", "/", "/forgot-password"];
+        const resetPasswordRegex = /^\/reset-password\/[^/]+/;
+
+        return !publicPaths.includes(pathname) && !resetPasswordRegex.test(pathname) && <Header />;
     };
 
     return (
@@ -27,6 +34,8 @@ function App() {
                 <Routes>
                     <Route path='/signup' element={<Signup />} />
                     <Route path='/login' element={<Login />} />
+                    <Route path='/forgot-password' element={<ForgotPassword />} />
+                    <Route path='/reset-password/:token' element={<ResetPassword />} />
                     <Route path='/settings' element={<Profile />} />
                     <Route path="/" element={<Login />} />
                 </Routes>

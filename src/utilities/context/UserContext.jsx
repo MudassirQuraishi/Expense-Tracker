@@ -10,7 +10,7 @@ export const UserContext = createContext({
 
 // eslint-disable-next-line react/prop-types
 export const UserContextProvider = ({ children }) => {
-    const [token, setToken] = useState();
+    const [token, setToken] = useState(null);
     const [userData, setUserData] = useState({
         fullname: '',
         email: '',
