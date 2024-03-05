@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'
+import { toast } from 'sonner'
+
 import classes from './Navbar.module.css'
 import { PiSquaresFour } from "react-icons/pi";
 import { CiWallet } from "react-icons/ci";
@@ -22,11 +24,15 @@ const Navbar = () => {
         setActiveLink(link);
     };
     const logoutHandler = () => {
-        const result = window.confirm('Are you sure you want to log out');
-        if (result) {
-            removeToken();
-            navigate('/login');
-        }
+        toast('Are you sure you want to log out', {
+            action: {
+                label: 'Logout',
+                onClick: () => {
+                    removeToken();
+                    navigate('/login');
+                }
+            },
+        })
     }
     return <>
         <div className={classes["navbar-container"]}>
@@ -46,7 +52,7 @@ const Navbar = () => {
                     <li className={`${classes['menu-link']} ${activeLink === 'Bills' ? classes.active : ''
                         }`} onClick={() => handleLinkClick('Bills')}><LiaFileInvoiceDollarSolid />Bills</li>
                     <li className={`${classes['menu-link']} ${activeLink === 'Expenses' ? classes.active : ''
-                        }`} onClick={() => handleLinkClick('Expenses')}><GrMoney />Expenses</li>
+                        }`} onClick={() => handleLinkClick('Expenses')}><GrMoney /><Link to={'/expenses'}>Expenses</Link> </li>
                     <li className={`${classes['menu-link']} ${activeLink === 'Goals' ? classes.active : ''
                         }`} onClick={() => handleLinkClick('Goals')}><GoGoal />Goals</li>
                     <li className={`${classes['menu-link']} ${activeLink === 'Settings' ? classes.active : ''

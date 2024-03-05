@@ -9,3 +9,15 @@ p {
     margin: 0;
     padding: 0;
 }
+ul {
+    margin: 0;
+    padding: 0;
+}
+hr {
+    margin: 0;
+}
+.chart-container {
+    width: 1052px;
+    height: 300px;
+    padding: 16px 24px;
+}

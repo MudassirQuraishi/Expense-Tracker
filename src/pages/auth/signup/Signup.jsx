@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios'
-import { toast } from 'react-toastify'
-
+import { toast } from 'sonner'
 import Tooltip from '../../../components/tootltip/Tooltip'
 import classes from './Signup.module.css';
 
@@ -88,7 +87,7 @@ const Signup = () => {
                     toast.error('Invalid credentials, please try again');
                     break;
                 case 409:
-                    toast.warn('User already exists, continue to login');
+                    toast.info('User already exists, continue to login');
                     clearForm();
                     navigate('/login');
                     break;

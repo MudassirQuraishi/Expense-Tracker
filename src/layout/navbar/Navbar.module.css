@@ -3,6 +3,7 @@
 }
 
 .navbar-container {
+    box-sizing: border-box;
     width: 17.5rem;
     height: max-content;
     background: black;
@@ -12,6 +13,7 @@
     justify-content: center;
     position: fixed;
     height: 100%;
+    z-index: 10;
 }
 
 a {
@@ -22,6 +24,7 @@ a {
 
 .logo-menu {
     padding: 1.875rem 1.75rem;
+    position: sticky;
     height: 31.5rem;
     width: 14rem;
     display: flex;
@@ -40,6 +43,7 @@ a {
 }
 
 .menu-links {
+    position: relative;
     list-style: none;
     text-align: start;
     padding: 0;
@@ -82,6 +86,7 @@ a {
 }
 
 .nav-footer {
+    position: relative;
     margin-top: 1.25rem;
     height: 12.25rem;
     padding: 0 1.75rem;

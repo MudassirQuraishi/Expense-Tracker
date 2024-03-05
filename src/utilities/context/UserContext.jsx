@@ -11,6 +11,7 @@ export const UserContext = createContext({
 // eslint-disable-next-line react/prop-types
 export const UserContextProvider = ({ children }) => {
     const [token, setToken] = useState(null);
+    const [loginStatus, setLoginStatus] = useState(false)
     const [userData, setUserData] = useState({
         fullname: '',
         email: '',
@@ -25,12 +26,15 @@ export const UserContextProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        const removeTokenTimeout = setTimeout(() => {
-            removeTokenHandler();
-        }, 60 * 60 * 1000);
+        if (!loginStatus) {
+            const removeTokenTimeout = setTimeout(() => {
+                removeTokenHandler();
+            }, 60 * 60 * 1000);
 
-        return () => clearTimeout(removeTokenTimeout);
-    }, [token]);
+            return () => clearTimeout(removeTokenTimeout);
+        }
+
+    }, [token, loginStatus]);
 
     useEffect(() => {
         const fetchDataFromServer = async () => {
@@ -47,14 +51,18 @@ export const UserContextProvider = ({ children }) => {
         fetchDataFromServer();
     }, [token]);
 
-    const setTokenHandler = (token) => {
+    const setTokenHandler = (token, keepLoggedIn) => {
         if (token) {
             setToken(token);
             localStorage.setItem('auth-token', token);
         }
+        if (keepLoggedIn) {
+            setLoginStatus(keepLoggedIn)
+        }
         else {
             const authToken = localStorage.getItem('auth-token');
             setToken(authToken)
+            setLoginStatus(false)
         }
     }
 

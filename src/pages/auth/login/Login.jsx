@@ -1,6 +1,6 @@
 import { useRef, useState, } from 'react';
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import { toast } from 'sonner'
 import { useNavigate, Link } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
@@ -74,7 +74,7 @@ const Login = () => {
             if (response.status === 200) {
                 toast.success('Login successful');
                 clearForm();
-                setToken(response.data.encryptedId)
+                setToken(response.data.encryptedId, response.data.keepLoggedIn)
                 if (response.data.isFirstTimeUser) {
                     navigate('/settings');
                 }

@@ -1,0 +1,226 @@
+.container {
+    box-sizing: border-box;
+    padding-left: 304px;
+    padding-top: 104px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    z-index: 0;
+    overflow: scroll;
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 1114px;
+    height: 548px;
+}
+.title-container {
+    width: 232px;
+    height: 32px;
+}
+.title-container p {
+    margin: 0;
+    color: #878787;
+    font-weight: 400;
+    font-size: 20px;
+}
+.graph-container {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+}
+.top-container {
+    width: 1114px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.card-container {
+    height: 500px;
+    width: 1114px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(2, 1fr); /* 2 rows */
+    gap: 16px;
+}
+.expense-cards {
+    background: white;
+    width: 360px;
+    height: 238px;
+    border-radius: 8px;
+}
+.type-container {
+    background: #e8e8e8;
+    border-radius: 8px;
+    height: 78px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+.logo-container {
+    padding: 16px 0px;
+    padding-left: 24px;
+}
+.text-container {
+    padding: 16px 0px;
+    padding-right: 24px;
+    height: 46px;
+    width: 248px;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+.logo-container div {
+    background-color: #d1d1d1;
+    width: 40px;
+    height: 48px;
+    border-radius: 8px;
+}
+.data-container-1 {
+    width: 116px;
+    height: 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.data-container-1 p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+}
+.data-container-1 h4 {
+    margin: 0;
+}
+.data-container-2 {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.data-container-2 div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.data-container-2 div p {
+    font-size: 14px;
+}
+.data-container-2 p {
+    font-size: 11px;
+    font-weight: 400;
+}
+.expense-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 1114px;
+}
+.expense-container {
+    background: white;
+    border-radius: 8px;
+    padding: 0px 28px 36px 28px;
+}
+.expense-header {
+    height: 72px;
+}
+.header-links {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 72px;
+    padding: 12px 0px 12px 0px;
+    align-items: center;
+}
+.header-link:first-child {
+    width: 202px;
+    text-align: left;
+}
+
+.header-link:nth-child(2) {
+    width: 202px;
+    text-align: center;
+}
+
+.header-link:nth-child(3) {
+    width: 202px;
+    text-align: center;
+}
+
+.header-link:nth-child(4) {
+    width: 202px;
+    text-align: center;
+}
+
+.header-link:last-child {
+    width: 202px;
+    text-align: right;
+}
+.expense-links-container {
+    margin-top: 0.5rem;
+    max-height: 360px;
+}
+.expense-links {
+    list-style: none;
+    height: 72px;
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    align-items: center;
+}
+.expense-list {
+    padding: 16px 0px;
+}
+.expense-list:first-child {
+    padding: 16px 0px;
+    width: 202px;
+    text-align: left;
+}
+
+.expense-list:nth-child(2) {
+    width: 202px;
+    text-align: center;
+}
+
+.expense-list:nth-child(3) {
+    width: 202px;
+    text-align: center;
+}
+
+.expense-list:nth-child(4) {
+    width: 202px;
+    text-align: center;
+}
+
+.expense-list:last-child {
+    width: 202px;
+    text-align: right;
+}
+.expense-links-container hr {
+    background: #e8e8e8;
+    height: 2px;
+    border: none;
+}
+.expense-actions {
+    padding-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the child elements vertically */
+    gap: 16px;
+}
+.expense-actions button {
+    height: 48px;
+    width: 192px;
+    border: none;
+    background: #439d91;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
