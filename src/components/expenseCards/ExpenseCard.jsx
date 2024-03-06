@@ -1,21 +1,61 @@
-import { useRef } from 'react'
+/* eslint-disable react/prop-types */
+import { useEffect, useRef, useState } from 'react'
+// import { toast } from 'sonner'
 import axios from 'axios'
 
 import Modal from '../Modal/Modal'
-import classes from './ExpenseForm.module.css'
-import { useUserContext } from '../../utilities/customHooks/customHooks'
-const ExpenseForm = (props) => {
-    const { token } = useUserContext()
-    const itemRef = useRef('');
-    const locationRef = useRef('');
-    const paymentRef = useRef('');
-    const priceRef = useRef('');
-    const dateRef = useRef('');
-    const categoryRef = useRef('');
-    const onCloseHanlder = () => {
-        // eslint-disable-next-line react/prop-types
-        props.closeHandler()
+import classes from './ExpenseCard.module.css'
+import { FaTty } from 'react-icons/fa'
+const ExpenseCard = (props) => {
+    const [expenseDetails, setExpenseDetails] = useState(null)
+    const token = localStorage.getItem('auth-token')
+    const itemRef = useRef({ current: '' });
+    const locationRef = useRef({ current: '' });
+    const paymentRef = useRef({ current: '' });
+    const priceRef = useRef({ current: '' });
+    const dateRef = useRef({ current: '' });
+    const categoryRef = useRef({ current: '' });
+
+
+    const onCloseHanlder = async () => {
+        console.log('hello')
+        try {
+            await axios.delete(`http://localhost:8080/api/delete-expense/${props.expenseId}`,
+                {
+                    headers: { Authorization: token }
+                }
+            )
+            props.closeHandler()
+        } catch (error) {
+            console.log(error)
+        }
+
     }
+    useEffect(() => {
+        const getExpenseDetails = async () => {
+            const response = await axios.get(`http://localhost:8080/api/get-expense/${props.expenseId}`,
+                {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+            itemRef.current.value = response.data.expenseData.item;
+            locationRef.current.value = response.data.expenseData.location;
+            paymentRef.current.value = response.data.expenseData.paymentType;
+            priceRef.current.value = response.data.expenseData.amount;
+            categoryRef.current.value = response.data.expenseData.category;
+            setExpenseDetails(response.data.expenseData)
+        }
+        getExpenseDetails()
+
+
+    }, [props.expenseId, token])
+    if (!expenseDetails) {
+        return;
+    }
+
+
+
 
 
     const formSubmitHandler = async (e) => {
@@ -29,8 +69,8 @@ const ExpenseForm = (props) => {
             amount: priceRef.current.value,
             category: categoryRef.current.value,
         }
-        console.log(expenseDetails)
-        const response = await axios.post('http://localhost:8080/api/add-expense', expenseDetails,
+
+        const response = await axios.put(`http://localhost:8080/api/update-expense/${props.expenseId}`, expenseDetails,
             {
                 headers: { Authorization: token }
             }
@@ -42,15 +82,15 @@ const ExpenseForm = (props) => {
             <form className="form-conatiner" onSubmit={formSubmitHandler}>
                 <div className={`${classes['form-control']}`}>
                     <div className={`${classes['form-group']}`}>
-                        <label htmlFor="">What did you buy?</label>
+                        <label htmlFor="">Is this what you spent on?</label>
                         <input type="text" placeholder="Ex: Movie Ticktes, GTR 5...." ref={itemRef} />
                     </div>
                     <div className={`${classes['form-group']}`}>
-                        <label htmlFor="">Where did you Buy?</label>
+                        <label htmlFor="">Is this where you spent?</label>
                         <input type="text" placeholder="Ex: UV Cinemas, MG Mobiles...." ref={locationRef} />
                     </div>
                     <div className={`${classes['form-group']}`}>
-                        <label htmlFor="">Which category will it fall in?</label>
+                        <label htmlFor="">Is this category correct?</label>
                         <select name="" id="" ref={categoryRef}>
                             <option defaultChecked>Select a Category</option>
                             <option value="housing & bills">Housing and Bills</option>
@@ -62,7 +102,7 @@ const ExpenseForm = (props) => {
                         </select>
                     </div>
                     <div className={`${classes['form-group']}`}>
-                        <label htmlFor="">How did you buy?</label>
+                        <label htmlFor="">Is this how you spent?</label>
                         <select name="" id="" ref={paymentRef}>
                             <option defaultChecked>Select a method</option>
                             <option value="credit">Credit</option>
@@ -73,7 +113,7 @@ const ExpenseForm = (props) => {
                         </select>
                     </div>
                     <div className={`${classes['form-group']}`}>
-                        <label htmlFor="">When did you buy?</label>
+                        <label htmlFor="">Is this when you spent?</label>
                         <input type='date' placeholder="Ex: Rs.1000, Half my salary...." ref={dateRef} />
                     </div>
                     {/* <div className={`${classes['form-group']}`}>
@@ -87,13 +127,13 @@ const ExpenseForm = (props) => {
                         </select>
                     </div> */}
                     <div className={`${classes['form-group']}`}>
-                        <label htmlFor="">How much did you spend?</label>
+                        <label htmlFor="">Is this how much you spent?</label>
                         <input type="number" placeholder="Ex: Rs.1000, Half my salary...." ref={priceRef} />
                     </div>
                 </div>
                 <div className={`${classes['form-actions']}`} >
-                    <button type='reset' onClick={onCloseHanlder}>Cancel</button>
-                    <button type='submit'>Add Expense</button>
+                    <button type='reset' onClick={onCloseHanlder}>Delete Expense</button>
+                    <button type='submit'>Update Expense</button>
                 </div>
             </form>
         </Modal>
@@ -101,4 +141,4 @@ const ExpenseForm = (props) => {
 
 }
 
-export default ExpenseForm
+export default ExpenseCard

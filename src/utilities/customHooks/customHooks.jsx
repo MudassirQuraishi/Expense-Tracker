@@ -1,5 +1,6 @@
 import { useContext, } from 'react';
 import { UserContext } from '../context/UserContext'
+import { ExpenseContext } from '../context/ExpenseContext';
 export const useUserContext = () => {
     const context = useContext(UserContext);
     if (!context) {
@@ -7,3 +8,10 @@ export const useUserContext = () => {
     }
     return context;
 };
+export const useExpenseHook = () => {
+    const context = useContext(ExpenseContext);
+    if (!context) {
+        throw new Error("useExpenseContext must be used within a Expense Provider");
+    }
+    return context;
+}

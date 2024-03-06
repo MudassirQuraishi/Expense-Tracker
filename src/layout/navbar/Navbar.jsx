@@ -13,7 +13,7 @@ import { RiSettings4Line } from "react-icons/ri";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
 import dummyImage from '../../assets/images/blank-profile-picture-973460_640.webp'
-import { useUserContext } from '../../utilities/customHooks/UserContextHook';
+import { useUserContext } from '../../utilities/customHooks/customHooks';
 
 
 const Navbar = () => {

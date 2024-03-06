@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import classes from './Profile.module.css';
 import Resizer from 'react-image-file-resizer';
-import { useUserContext } from '../../../utilities/customHooks/UserContextHook';
+import { useUserContext } from '../../../utilities/customHooks/customHooks';
 
 const Profile = () => {
     const { userDetails, updateUserData } = useUserContext();
