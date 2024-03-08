@@ -69,6 +69,18 @@
     background: #299d91;
     cursor: pointer;
 }
+.form-actions button {
+    height: 48px;
+    width: 200px;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+    margin-top: 0.5rem;
+    border: 1px solid transparent;
+    color: #299d91;
+    background: white;
+    cursor: pointer;
+}
 .form-actions button[type="submit"]:hover {
     background-color: #248179;
 }

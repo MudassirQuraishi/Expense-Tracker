@@ -3,9 +3,12 @@ import axios from 'axios'
 
 import Modal from '../modal/Modal'
 import classes from './ExpenseForm.module.css'
-import { useUserContext } from '../../utilities/customHooks/customHooks'
+// import { useUserContext } from '../../utilities/customHooks/customHooks'
+import { useDispatch, useSelector } from 'react-redux'
+import { expenseActions } from '../../utilities/redux-store/slices/expenseSlice'
 const ExpenseForm = (props) => {
-    const { token } = useUserContext()
+    const dispacth = useDispatch()
+    const token = useSelector(state => state.auth.authToken)
     const itemRef = useRef('');
     const locationRef = useRef('');
     const paymentRef = useRef('');
@@ -29,13 +32,13 @@ const ExpenseForm = (props) => {
             amount: priceRef.current.value,
             category: categoryRef.current.value,
         }
-        console.log(expenseDetails)
         const response = await axios.post('http://localhost:8080/api/add-expense', expenseDetails,
             {
                 headers: { Authorization: token }
             }
         )
-        console.log(response)
+        dispacth(expenseActions.addExpense(response.data.expenseData))
+        onCloseHanlder()
     }
     return <>
         <Modal>

@@ -1,15 +1,20 @@
-import { useState } from 'react';
-import classes from './Expenses.module.css'
-
-import { MdMapsHomeWork } from "react-icons/md";
-import { FaArrowUp } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import ExpenseGraph from '../../../components/chart/Chart';
 import ExpenseForm from '../../../components/expenseForm/ExpenseFrom';
-import { useExpenseHook } from '../../../utilities/customHooks/customHooks';
 import ExpenseCard from '../../../components/expenseCards/ExpenseCard';
-// import { useUserContext } from '../../../utilities/customHooks/UserContextHook';
+import { expenseActions } from '../../../utilities/redux-store/slices/expenseSlice';
+import RecentCards from '../../../components/recentCards/RecentCards';
+
+
+import classes from './Expenses.module.css';
+
+
 const Expense = () => {
-    const { organisedExpenses, topFiveExpenses } = useExpenseHook();
+    const dispatch = useDispatch();
+    const token = useSelector(state => state.auth.authToken);
+
     const [expenseId, setExpenseId] = useState(null)
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -20,69 +25,37 @@ const Expense = () => {
         setIsOpen(false)
     }
     const openExpenseHanlder = (e) => {
-        console.log(e.target)
+
         setExpenseId(e.target.id)
         setIsOpen(true)
     }
+    useEffect(() => {
+        const fetchData = async () => {
+            if (token) {
+                try {
+                    const response = await axios.get('http://localhost:8080/api/get-expenses',
+                        {
+                            headers: { Authorization: token }
+                        }
+                    )
+                    dispatch(expenseActions.setExpenses(response.data.expenseData))
 
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+        fetchData()
+    }, [token, dispatch])
 
+    const organisedExpenses = useSelector(state => state.expense.organisedExpenses);
 
-
+    const topFiveExpenses = useSelector(state => state.expense.topFiveExpenses);
     if (!organisedExpenses || !topFiveExpenses) {
-        return null;
+        return;
     }
 
-
-
-
-
-    const categories = Object.keys(organisedExpenses);
-
-    const expenseCards = categories.map((category) => {
-        const categoryExpenses = organisedExpenses[category];
-
-
-        const totalPrice = categoryExpenses.reduce((total, expense) => total + expense.amount, 0);
-
-        const categoryExpenseItems = categoryExpenses.map((expense) => (
-            <>
-
-                <div className={classes["expense-data"]} key={expense._id} id={expense._id} onClick={openExpenseHanlder}>
-                    <div className={classes["expense-data-container-1"]}>
-                        <p>{expense.item}</p>
-                    </div>
-                    <div className={classes["expense-data-container-2"]}>
-                        <p>{expense.amount}</p>
-                        <small>{expense.date}</small>
-                    </div>
-                </div>
-            </>
-        ));
-
-        return (
-            <div key={category} className={classes["expense-cards"]}>
-                <div className={classes["type-container"]}>
-                    <div className={classes["logo-container"]}>
-                        <MdMapsHomeWork style={{ height: '40px', width: '30px', margin: '4px 5px' }} />
-                    </div>
-                    <div className={classes["text-container"]}>
-                        <div className={classes["data-container-1"]}>
-                            <p>{category}</p>
-                            <h5>${totalPrice}</h5>
-                        </div>
-                        <div className={classes["data-container-2"]}>
-                            <div><p>15%</p><FaArrowUp color='red' /></div>
-                            <p>Compared to last month</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={classes["recent-container"]}>
-                    {categoryExpenseItems}
-                </div>
-
-            </div>
-        );
-    });
     const expenseList = topFiveExpenses.map((expense) => {
         return <>
             <ul className={classes["expense-links"]} key={expense._id}>
@@ -134,7 +107,7 @@ const Expense = () => {
             <div className={classes["bottom-container"]}>
                 <div className={classes["title-container"]}> <p>Expense Breakdown</p> </div>
                 <div className={classes["card-container"]}>
-                    {expenseCards}
+                    <RecentCards openExpenseHandler={openExpenseHanlder} />
                 </div>
             </div>
         </div>

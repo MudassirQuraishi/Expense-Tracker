@@ -1,9 +1,10 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+
 const initialAuthState = {
     isLoggedIn: false,
     keepLoggedIn: false,
-    authToken: localStorage.getItem("authToken") || null,
 };
+
 const authSlice = createSlice({
     name: "auth",
     initialState: initialAuthState,
@@ -12,9 +13,14 @@ const authSlice = createSlice({
             if (action.payload.authToken) {
                 state.authToken = action.payload.authToken;
                 state.isLoggedIn = true;
-            }
-            if (action.payload.keepLoggedIn) {
-                state.keepLoggedIn = true;
+                state.keepLoggedIn = action.payload.keepLoggedIn;
+                if (!action.payload.keepLoggedIn) {
+                    setTimeout(() => {
+                        state.isLoggedIn = false;
+                        state.keepLoggedIn = false;
+                        state.authToken = null;
+                    }, 3600000);
+                }
             }
         },
         logout(state) {
@@ -24,9 +30,6 @@ const authSlice = createSlice({
         },
     },
 });
-const store = configureStore({
-    reducer: { auth: authSlice.reducer },
-});
-export const authActions = authSlice.actions;
 
-export default store;
+export const authActions = authSlice.actions;
+export default authSlice;

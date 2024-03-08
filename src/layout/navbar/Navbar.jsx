@@ -13,9 +13,10 @@ import { RiSettings4Line } from "react-icons/ri";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
 import { useDispatch } from 'react-redux';
-import { authActions } from '../../utilities/store/store';
+import { authActions } from '../../utilities/redux-store/slices/authSlice';
 import dummyImage from '../../assets/images/blank-profile-picture-973460_640.webp'
 import { useUserContext } from '../../utilities/customHooks/customHooks';
+import { expenseActions } from '../../utilities/redux-store/slices/expenseSlice';
 
 
 const Navbar = () => {
@@ -31,7 +32,9 @@ const Navbar = () => {
             action: {
                 label: 'Logout',
                 onClick: () => {
+                    dispatch(expenseActions.clearState())
                     dispatch(authActions.logout())
+
                     navigate('/login');
                 }
             },

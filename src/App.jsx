@@ -16,7 +16,7 @@ import Expense from './pages/user/Expenses/Expenses';
 function App() {
     const NavbarWrapper = () => {
         const { pathname } = useLocation();
-        const publicPaths = ["/login", "/signup", "/", "/forgot-password"];
+        const publicPaths = ["/login", "/signup", "/forgot-password"];
         const resetPasswordRegex = /^\/reset-password\/[^/]+/;
 
         return !publicPaths.includes(pathname) && !resetPasswordRegex.test(pathname) && <Navbar />;
@@ -24,7 +24,7 @@ function App() {
 
     const HeaderWrapper = () => {
         const { pathname } = useLocation();
-        const publicPaths = ["/login", "/signup", "/", "/forgot-password"];
+        const publicPaths = ["/login", "/signup", "/forgot-password"];
         const resetPasswordRegex = /^\/reset-password\/[^/]+/;
 
         return !publicPaths.includes(pathname) && !resetPasswordRegex.test(pathname) && <Header />;
@@ -45,7 +45,7 @@ function App() {
                     <Route path='/expenses' element={<Expense />} />
                     <Route path='/home' element={<Expense />} />
                     <Route path='/settings' element={<Profile />} />
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<Expense />} />
                 </Routes>
             </BrowserRouter>
             <Toaster position="bottom-right" expand={false} richColors duration={3000} />

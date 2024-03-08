@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios'
 import { toast } from 'sonner'
 import Tooltip from '../../../components/tootltip/Tooltip'
@@ -8,6 +9,14 @@ import classes from './Signup.module.css';
 
 const Signup = () => {
     const navigate = useNavigate();
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const checkRef = useRef('');
@@ -64,7 +73,7 @@ const Signup = () => {
     }
     const handleSubmit = async () => {
         if (errors.email || errors.password || errors.check) {
-            console.log('Please fill valid details')
+            toast.warning('Please fill valid details')
             return;
         }
         try {
@@ -73,7 +82,6 @@ const Signup = () => {
                 password: passwordRef.current.value
             }
             const response = await axios.post('http://localhost:8080/auth/signup', signinData)
-            console.log(response)
             if (response.status === 201) {
                 toast.success('Signup successful');
                 clearForm();
@@ -81,7 +89,6 @@ const Signup = () => {
             }
         }
         catch (error) {
-            console.error(error.message)
             switch (error.response.status) {
                 case 400:
                     toast.error('Invalid credentials, please try again');

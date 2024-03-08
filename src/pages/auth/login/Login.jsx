@@ -1,6 +1,6 @@
-import { useRef, useState, } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { authActions } from '../../../utilities/store/store'
+import { authActions } from '../../../utilities/redux-store/slices/authSlice';
 import axios from 'axios'
 import { toast } from 'sonner'
 import { useNavigate, Link } from 'react-router-dom';
@@ -13,10 +13,12 @@ import classes from './Login.module.css';
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const authState = useSelector(state => state.auth);
-    if (authState.isLoggedIn) {
-        navigate('/home')
-    }
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/')
+        }
+    }, [isLoggedIn, navigate])
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const termsCheckboxRef = useRef(null);
@@ -78,7 +80,6 @@ const Login = () => {
 
             if (response.status === 200) {
                 toast.success('Login successful');
-
                 clearForm();
                 const loginStoreData = {
                     authToken: response.data.encryptedId,
@@ -86,6 +87,12 @@ const Login = () => {
                 }
                 localStorage.setItem("authToken", response.data.encryptedId);
                 dispatch(authActions.login(loginStoreData))
+            }
+            if (response.data.isFirstTimeUser) {
+                navigate('/settings');
+            }
+            else {
+                navigate('/')
             }
         }
         catch (error) {
@@ -98,7 +105,7 @@ const Login = () => {
                     toast.warn('Please verify your email before logging in')
                     break;
                 case 404:
-                    toast.warn('User not found, please signup first');
+                    toast.warning('User not found, please signup first');
                     clearForm();
                     navigate('/signup')
                     break;
