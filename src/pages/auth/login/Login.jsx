@@ -1,17 +1,22 @@
 import { useRef, useState, } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { authActions } from '../../../utilities/store/store'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { useNavigate, Link } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
 import classes from './Login.module.css';
-import { useUserContext } from '../../../utilities/customHooks/customHooks'
 
 
 
 const Login = () => {
     const navigate = useNavigate();
-    const { setToken } = useUserContext();
+    const dispatch = useDispatch();
+    const authState = useSelector(state => state.auth);
+    if (authState.isLoggedIn) {
+        navigate('/home')
+    }
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const termsCheckboxRef = useRef(null);
@@ -73,14 +78,14 @@ const Login = () => {
 
             if (response.status === 200) {
                 toast.success('Login successful');
+
                 clearForm();
-                setToken(response.data.encryptedId, response.data.keepLoggedIn)
-                if (response.data.isFirstTimeUser) {
-                    navigate('/settings');
+                const loginStoreData = {
+                    authToken: response.data.encryptedId,
+                    keepLoggedIn: response.data.keepLoggedIn
                 }
-                else {
-                    navigate('/home');
-                }
+                localStorage.setItem("authToken", response.data.encryptedId);
+                dispatch(authActions.login(loginStoreData))
             }
         }
         catch (error) {

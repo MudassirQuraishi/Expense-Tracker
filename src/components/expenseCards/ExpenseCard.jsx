@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from 'react'
 // import { toast } from 'sonner'
 import axios from 'axios'
 
-import Modal from '../Modal/Modal'
+import Modal from '../modal/Modal'
 import classes from './ExpenseCard.module.css'
-import { FaTty } from 'react-icons/fa'
+
 const ExpenseCard = (props) => {
     const [expenseDetails, setExpenseDetails] = useState(null)
     const token = localStorage.getItem('auth-token')

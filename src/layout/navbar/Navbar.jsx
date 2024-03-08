@@ -12,13 +12,16 @@ import { GoGoal } from "react-icons/go";
 import { RiSettings4Line } from "react-icons/ri";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../utilities/store/store';
 import dummyImage from '../../assets/images/blank-profile-picture-973460_640.webp'
 import { useUserContext } from '../../utilities/customHooks/customHooks';
 
 
 const Navbar = () => {
+    const dispatch = useDispatch();
     const [activeLink, setActiveLink] = useState('Overview');
-    const { userDetails, removeToken } = useUserContext()
+    const { userDetails } = useUserContext()
     const navigate = useNavigate();
     const handleLinkClick = (link) => {
         setActiveLink(link);
@@ -28,7 +31,7 @@ const Navbar = () => {
             action: {
                 label: 'Logout',
                 onClick: () => {
-                    removeToken();
+                    dispatch(authActions.logout())
                     navigate('/login');
                 }
             },

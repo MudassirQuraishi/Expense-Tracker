@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import axios from 'axios'
 
-import Modal from '../Modal/Modal'
+import Modal from '../modal/Modal'
 import classes from './ExpenseForm.module.css'
 import { useUserContext } from '../../utilities/customHooks/customHooks'
 const ExpenseForm = (props) => {
