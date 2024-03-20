@@ -7,7 +7,7 @@ import ExpenseForm from '../../../components/expenseForm/ExpenseFrom';
 import ExpenseCard from '../../../components/expenseCards/ExpenseCard';
 import { expenseActions } from '../../../utilities/redux-store/slices/expenseSlice';
 import RecentCards from '../../../components/recentCards/RecentCards';
-
+import { convertToCSV } from '../../../utilities/converToCSV';
 
 import classes from './Expenses.module.css';
 
@@ -15,6 +15,7 @@ import classes from './Expenses.module.css';
 const Expense = () => {
     const dispatch = useDispatch();
     const darkMode = useSelector(selectDarkMode);
+    const expenses = useSelector((state) => state.expense.allExpenses);
     const token = useSelector(state => state.auth.authToken);
 
     const [expenseId, setExpenseId] = useState(null)
@@ -68,10 +69,27 @@ const Expense = () => {
                 <li className={classes["expense-list"]}>{expense.amount}</li>
             </ul> <hr />
         </>
-
-
-
     })
+    const downloadHandler = () => {
+        const csvData = convertToCSV(expenses);
+
+
+        const blob = new Blob([csvData], { type: 'text/csv' });
+
+
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'expenses.csv';
+        document.body.appendChild(a);
+
+
+        a.click();
+
+
+        document.body.removeChild(a);
+    }
     return <>
         {isFormOpen && <ExpenseForm closeHandler={closeHandler} />}
         {isOpen && <ExpenseCard closeHandler={expenseCloseHandler} expenseId={expenseId} />}
@@ -94,7 +112,7 @@ const Expense = () => {
                         {expenseList}
                     </div>
                     <div className={classes["expense-actions"]}>
-                        <button>See All</button>
+                        <button onClick={downloadHandler}>Download Expenses</button>
                         <button onClick={() => setIsFormOpen(true)}>Add Expense</button>
                     </div>
                 </div>
