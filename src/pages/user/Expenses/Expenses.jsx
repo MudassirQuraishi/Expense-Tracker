@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectDarkMode } from '../../../utilities/redux-store/slices/modeSlice';
 import ExpenseGraph from '../../../components/chart/Chart';
 import ExpenseForm from '../../../components/expenseForm/ExpenseFrom';
 import ExpenseCard from '../../../components/expenseCards/ExpenseCard';
@@ -13,6 +14,7 @@ import classes from './Expenses.module.css';
 
 const Expense = () => {
     const dispatch = useDispatch();
+    const darkMode = useSelector(selectDarkMode);
     const token = useSelector(state => state.auth.authToken);
 
     const [expenseId, setExpenseId] = useState(null)
@@ -73,7 +75,7 @@ const Expense = () => {
     return <>
         {isFormOpen && <ExpenseForm closeHandler={closeHandler} />}
         {isOpen && <ExpenseCard closeHandler={expenseCloseHandler} expenseId={expenseId} />}
-        <div className={classes.container}>
+        <div className={`${classes.container} ${darkMode ? classes["dark-mode"] : classes["light-mode"]}`}>
             <div className={classes["expense-dashboard"]}>
                 <div className={classes["title-container"]}> <p>Your Previous Expenses</p></div>
                 <div className={classes["expense-container"]}>

@@ -1,3 +1,24 @@
+:root {
+    --primary-color: #299d91; /* Default primary color */
+    --background-color: #fff; /* Default background color */
+    --text-color: #191d23; /* Default text color */
+    --secondary-color: #878787; /* Default secondary color */
+}
+
+.dark-mode {
+    --primary-color: #6cb2b8; /* Dark mode primary color */
+    --background-color: #333; /* Dark mode background color */
+    --text-color: #191d23; /* Dark mode text color */
+    --secondary-color: #878787; /* Dark mode secondary color */
+}
+
+.light-mode {
+    --primary-color: #299d91; /* Light mode primary color */
+    --background-color: #d0d5dd; /* Light mode background color */
+    --text-color: #191d23; /* Light mode text color */
+    --secondary-color: #878787; /* Light mode secondary color */
+}
+
 .expense-data {
     height: 76px;
     display: flex;
@@ -5,40 +26,50 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .expense-data-container-1,
 .expense-data-container-2 {
     padding: 0px 20px;
 }
+
 .expense-data-container-1 {
     width: 146px;
     height: 24px;
     font-size: 16px;
     font-weight: 400;
+    color: var(--text-color);
 }
+
 .expense-data-container-2 {
     display: flex;
     flex-direction: column;
     align-items: end;
+    color: var(--text-color);
 }
+
 .expense-data-container-2 p {
     font-size: 16px;
 }
+
 .expense-data-container-2 small {
-    color: #878787;
+    color: var(--secondary-color);
 }
+
 .recent-conatiner hr {
-    background: #878787;
+    background: var(--secondary-color);
     height: 2px;
     border: none;
 }
+
 .expense-cards {
     background: white;
     width: 360px;
     max-height: 238px;
     border-radius: 8px;
 }
+
 .type-container {
-    background: #e8e8e8;
+    background: var(--background-color);
     border-radius: 8px;
     height: 78px;
     display: flex;
@@ -46,10 +77,12 @@
     gap: 16px;
     align-items: center;
 }
+
 .logo-container {
     padding: 16px 0px;
     padding-left: 24px;
 }
+
 .text-container {
     padding: 16px 0px;
     padding-right: 24px;
@@ -59,12 +92,14 @@
     flex-direction: row;
     gap: 2px;
 }
+
 .logo-container div {
-    background-color: #d1d1d1;
+    background-color: var(--secondary-color);
     width: 40px;
     height: 48px;
     border-radius: 8px;
 }
+
 .data-container-1 {
     width: 116px;
     height: 46px;
@@ -72,29 +107,35 @@
     flex-direction: column;
     gap: 4px;
 }
+
 .data-container-1 p {
     margin: 0;
     font-size: 14px;
     font-weight: 400;
     text-transform: capitalize;
 }
+
 .data-container-1 h5 {
     margin: 0;
 }
+
 .data-container-2 {
     margin-top: 6px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
+
 .data-container-2 div {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
+
 .data-container-2 div p {
     font-size: 14px;
 }
+
 .data-container-2 p {
     font-size: 10px;
     font-weight: 400;

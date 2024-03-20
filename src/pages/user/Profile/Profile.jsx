@@ -1,11 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import classes from './Profile.module.css';
 import Resizer from 'react-image-file-resizer';
-import { useUserContext } from '../../../utilities/customHooks/customHooks';
+import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux';
+import { selectDarkMode } from '../../../utilities/redux-store/slices/modeSlice';
+import { userActions } from '../../../utilities/redux-store/slices/userSlice';
 
 const Profile = () => {
-    const { userDetails, updateUserData } = useUserContext();
+    const dispatch = useDispatch()
     const [activeLink, setActiveLink] = useState('Account');
+    const darkMode = useSelector(selectDarkMode)
+    const token = useSelector(state => state.auth.authToken)
+    const userDetails = useSelector(state => state.user)
 
     const fullNameRef = useRef();
     const emailRef = useRef();
@@ -61,7 +67,14 @@ const Profile = () => {
                 profilePhoto: imageRef.current,
                 email: emailRef.current.value,
             };
-            updateUserData(updatedUserData)
+            const response = await axios.post("http://localhost:8080/api/update-profile", updatedUserData, {
+                headers: {
+                    authorization: token,
+                }
+            })
+            console.log(response)
+
+            dispatch(userActions.updateUserDetails(updatedUserData))
         } catch (error) {
             console.error(error);
         }
@@ -71,9 +84,8 @@ const Profile = () => {
 
     return (
         <>
-            <div className={classes.container}>
-                <h2>Settings</h2>
-                <div className={classes["outer-container"]}>
+            <div className={`${classes.container} `}>
+                <div className={`${classes["outer-container"]} ${darkMode ? classes["dark-mode"] : classes["light-mode"]}`}>
                     <div className={classes["header"]}>
                         <ul className={classes["menu-links"]}>
                             <li className={classes["menu-link"]} onClick={() => handleLinkClick('Account')} >Account <hr className={activeLink === 'Account' ? classes.active : ''} /></li>

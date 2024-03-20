@@ -4,9 +4,11 @@ import { MdMapsHomeWork } from 'react-icons/md';
 import { FaArrowUp } from 'react-icons/fa';
 import classes from './RecentCards.module.css';
 import { useSelector } from 'react-redux';
+import { selectDarkMode } from '../../utilities/redux-store/slices/modeSlice';
 
 const RecentCards = ({ openExpenseHandler }) => {
     const organisedExpenses = useSelector(state => state.expense.organisedExpenses)
+    const darkMode = useSelector(selectDarkMode)
     const categories = Object.keys(organisedExpenses);
     return (
         <>
@@ -27,7 +29,7 @@ const RecentCards = ({ openExpenseHandler }) => {
                 ));
 
                 return (
-                    <div key={category} className={classes['expense-cards']}>
+                    <div key={category} className={`${classes['expense-cards']} ${darkMode ? classes["dark-mode"] : classes["light-mode"]}`}>
                         <div className={classes['type-container']}>
                             <div className={classes['logo-container']}>
                                 <MdMapsHomeWork style={{ height: '40px', width: '30px', margin: '4px 5px' }} />

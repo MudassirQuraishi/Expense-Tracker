@@ -1,3 +1,21 @@
+:root {
+    --primary-color: #439d91; /* Default primary color */
+    --background-color: #fff; /* Default background color */
+    --text-color: #333; /* Default text color */
+}
+
+.dark-mode {
+    --primary-color: #6cb2b8; /* Dark mode primary color */
+    --background-color: #333; /* Dark mode background color */
+    --text-color: #fff; /* Dark mode text color */
+}
+
+.light-mode {
+    --primary-color: #439d91; /* Light mode primary color */
+    --background-color: #fff; /* Light mode background color */
+    --text-color: #333; /* Light mode text color */
+}
+
 .container {
     box-sizing: border-box;
     padding-left: 304px;
@@ -8,6 +26,8 @@
     gap: 32px;
     z-index: 0;
     overflow: scroll;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .bottom-container {
@@ -17,21 +37,25 @@
     width: 1114px;
     height: 548px;
 }
+
 .title-container {
     width: 232px;
     height: 32px;
 }
+
 .title-container p {
     margin: 0;
     color: #878787;
     font-weight: 400;
     font-size: 20px;
 }
+
 .graph-container {
     width: 100%;
     background: white;
     border-radius: 8px;
 }
+
 .top-container {
     width: 1114px;
     height: max-content;
@@ -39,6 +63,7 @@
     flex-direction: column;
     gap: 16px;
 }
+
 .card-container {
     height: 500px;
     width: 1114px;
@@ -49,20 +74,24 @@
     grid-template-rows: repeat(2, 1fr);
     gap: 16px;
 }
+
 .expense-dashboard {
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 1114px;
 }
+
 .expense-container {
-    background: white;
+    background: var(--background-color);
     border-radius: 8px;
     padding: 0px 28px 36px 28px;
 }
+
 .expense-header {
     height: 72px;
 }
+
 .header-links {
     height: 50px;
     display: flex;
@@ -72,6 +101,7 @@
     padding: 12px 0px 12px 0px;
     align-items: center;
 }
+
 .header-link:first-child {
     width: 202px;
     text-align: left;
@@ -96,10 +126,12 @@
     width: 202px;
     text-align: right;
 }
+
 .expense-links-container {
     margin-top: 0.5rem;
     max-height: 360px;
 }
+
 .expense-links {
     list-style: none;
     height: 72px;
@@ -108,9 +140,11 @@
     gap: 80px;
     align-items: center;
 }
+
 .expense-list {
     padding: 16px 0px;
 }
+
 .expense-list:first-child {
     padding: 16px 0px;
     width: 202px;
@@ -136,23 +170,26 @@
     width: 202px;
     text-align: right;
 }
+
 .expense-links-container hr {
     background: #e8e8e8;
     height: 2px;
     border: none;
 }
+
 .expense-actions {
     padding-top: 3rem;
     display: flex;
     justify-content: center;
-    align-items: center; /* Center the child elements vertically */
+    align-items: center;
     gap: 16px;
 }
+
 .expense-actions button {
     height: 48px;
     width: 192px;
     border: none;
-    background: #439d91;
+    background: var(--primary-color);
     color: white;
     border-radius: 8px;
     cursor: pointer;

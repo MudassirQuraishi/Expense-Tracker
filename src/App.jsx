@@ -10,10 +10,10 @@ import Header from './layout/header/Header';
 import ForgotPassword from './pages/auth/forgot_password/ForgotPassword';
 import ResetPassword from './pages/auth/reset-password/ResetPassword';
 import Expense from './pages/user/Expenses/Expenses';
-
-// import ExpenseForm from './components/expenseForm/ExpenseFrom';
-
+import { useSelector } from 'react-redux';
+import { selectDarkMode } from './utilities/redux-store/slices/modeSlice';
 function App() {
+    const darkMode = useSelector(selectDarkMode)
     const NavbarWrapper = () => {
         const { pathname } = useLocation();
         const publicPaths = ["/login", "/signup", "/forgot-password"];
@@ -32,23 +32,25 @@ function App() {
 
     return (
         <>
+            <div className={`app ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+                <BrowserRouter >
 
-            <BrowserRouter>
+                    <NavbarWrapper />
+                    <HeaderWrapper />
+                    <Routes>
+                        <Route path='/signup' element={<Signup />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/forgot-password' element={<ForgotPassword />} />
+                        <Route path='/reset-password/:token' element={<ResetPassword />} />
+                        <Route path='/expenses' element={<Expense />} />
+                        <Route path='/home' element={<Expense />} />
+                        <Route path='/settings' element={<Profile />} />
+                        <Route path="/" element={<Expense />} />
+                    </Routes>
+                </BrowserRouter>
+                <Toaster position="bottom-right" expand={false} richColors duration={3000} />
+            </div >
 
-                <NavbarWrapper />
-                <HeaderWrapper />
-                <Routes>
-                    <Route path='/signup' element={<Signup />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/forgot-password' element={<ForgotPassword />} />
-                    <Route path='/reset-password/:token' element={<ResetPassword />} />
-                    <Route path='/expenses' element={<Expense />} />
-                    <Route path='/home' element={<Expense />} />
-                    <Route path='/settings' element={<Profile />} />
-                    <Route path="/" element={<Expense />} />
-                </Routes>
-            </BrowserRouter>
-            <Toaster position="bottom-right" expand={false} richColors duration={3000} />
 
         </>
     );

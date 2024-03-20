@@ -12,17 +12,16 @@ import { GoGoal } from "react-icons/go";
 import { RiSettings4Line } from "react-icons/ri";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../utilities/redux-store/slices/authSlice';
 import dummyImage from '../../assets/images/blank-profile-picture-973460_640.webp'
-import { useUserContext } from '../../utilities/customHooks/customHooks';
 import { expenseActions } from '../../utilities/redux-store/slices/expenseSlice';
 
 
 const Navbar = () => {
     const dispatch = useDispatch();
+    const userData = useSelector(state => state.user)
     const [activeLink, setActiveLink] = useState('Overview');
-    const { userDetails } = useUserContext()
     const navigate = useNavigate();
     const handleLinkClick = (link) => {
         setActiveLink(link);
@@ -72,9 +71,9 @@ const Navbar = () => {
                 </ul>
                 <div className={classes["profile-container"]}>
                     <div className={classes["name-image"]}>
-                        <img src={userDetails.profilePhoto || dummyImage} alt="" />
+                        <img src={userData.profilePhoto || dummyImage} alt="" />
                         <div className={classes.name}>
-                            <h3>Name</h3>
+                            <h3>{userData.username}</h3>
                             <p>View Profile</p>
                         </div>
                     </div>

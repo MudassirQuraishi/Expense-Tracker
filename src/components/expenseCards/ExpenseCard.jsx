@@ -6,10 +6,12 @@ import axios from 'axios'
 import Modal from '../modal/Modal'
 import classes from './ExpenseCard.module.css'
 import { useDispatch, useSelector } from 'react-redux'
+import { selectDarkMode } from '../../utilities/redux-store/slices/modeSlice'
 import { expenseActions } from '../../utilities/redux-store/slices/expenseSlice'
 
 const ExpenseCard = (props) => {
     const dispatch = useDispatch()
+    const darkMode = useSelector(selectDarkMode)
     const [expenseDetails, setExpenseDetails] = useState(null)
     const token = useSelector(state => state.auth.authToken)
     const itemRef = useRef({ current: '' });
@@ -95,7 +97,7 @@ const ExpenseCard = (props) => {
     }
     return <>
         <Modal>
-            <form className="form-conatiner" onSubmit={formSubmitHandler}>
+            <form className={`${classes["form-conatiner"]} ${darkMode ? classes["dark-mode"] : classes["light-mode"]}`} onSubmit={formSubmitHandler}>
                 <div className={`${classes['form-control']}`}>
                     <div className={`${classes['form-group']}`}>
                         <label htmlFor="">Is this what you spent on?</label>

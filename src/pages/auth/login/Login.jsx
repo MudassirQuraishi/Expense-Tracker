@@ -7,6 +7,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import Tooltip from '../../../components/tootltip/Tooltip'
 import classes from './Login.module.css';
+import { userActions } from '../../../utilities/redux-store/slices/userSlice';
 
 
 
@@ -83,16 +84,18 @@ const Login = () => {
                 clearForm();
                 const loginStoreData = {
                     authToken: response.data.encryptedId,
-                    keepLoggedIn: response.data.keepLoggedIn
+                    keepLoggedIn: response.data.user.keepLoggedIn
                 }
                 localStorage.setItem("authToken", response.data.encryptedId);
                 dispatch(authActions.login(loginStoreData))
+                dispatch(userActions.updateUser(response.data.user))
             }
-            if (response.data.isFirstTimeUser) {
+            if (response.data.user.isFirstTimeUser) {
+
                 navigate('/settings');
             }
             else {
-                navigate('/')
+                navigate('/expenses')
             }
         }
         catch (error) {
@@ -102,7 +105,7 @@ const Login = () => {
                     toast.error('Invalid credentials, please try again');
                     break;
                 case 403:
-                    toast.warn('Please verify your email before logging in')
+                    toast.warning('Please verify your email before logging in')
                     break;
                 case 404:
                     toast.warning('User not found, please signup first');

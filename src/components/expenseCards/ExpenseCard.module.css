@@ -1,38 +1,58 @@
-.form-container {
-    background: #d0d5dd;
+/* /* Expenses.module.css */
+
+:root {
+    --primary-color: #299d91; /* Default primary color */
+    --background-color: #fff; /* Default background color */
+    --text-color: #191d23; /* Default text color */
 }
+
+.dark-mode {
+    --primary-color: #6cb2b8; /* Dark mode primary color */
+    --background-color: #333; /* Dark mode background color */
+    --text-color: #fff; /* Dark mode text color */
+}
+
+.light-mode {
+    --primary-color: #299d91; /* Light mode primary color */
+    --background-color: #d0d5dd; /* Light mode background color */
+    --text-color: #191d23; /* Light mode text color */
+}
+
+.form-container {
+    background: var(--background-color);
+}
+
 .form-control {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
+
 .form-group {
     display: flex;
     flex-direction: column;
     height: 60px;
 }
+
 .form-group label {
     width: 342px;
     height: 20px;
     font-size: 12px;
-    color: #191d23;
+    color: var(--text-color);
     padding-left: 2px;
     padding-bottom: 3px;
 }
-.form-group input {
-    height: 48px;
-    border-radius: 8px;
-    border: 1px solid #d0d5dd;
-    padding-left: 16px;
-}
+
+.form-group input,
 .form-group select {
     height: 48px;
     border-radius: 8px;
-    border: 1px solid #d0d5dd;
+    border: 1px solid var(--background-color);
     padding-left: 16px;
 }
+
 .form-group select option {
-    color: #d0d5dd;
+    color: var(--background-color);
 }
 
 .form-actions {
@@ -41,22 +61,8 @@
     justify-content: center;
     gap: 10px;
 }
-.form-actions button[type="reset"] {
-    height: 48px;
-    width: 200px;
-    border-radius: 4px;
-    outline: none;
-    font-size: 16px;
-    margin-top: 0.5rem;
-    border: 1px solid transparent;
-    color: #299d91;
-    background: white;
-    cursor: pointer;
-}
-.form-actions button[type="reset"]:hover {
-    background-color: #d0d5dd;
-}
 
+.form-actions button[type="reset"],
 .form-actions button[type="submit"] {
     height: 48px;
     width: 200px;
@@ -65,22 +71,23 @@
     font-size: 16px;
     margin-top: 0.5rem;
     border: 1px solid transparent;
-    color: white;
-    background: #299d91;
     cursor: pointer;
 }
-.form-actions button {
-    height: 48px;
-    width: 200px;
-    border-radius: 4px;
-    outline: none;
-    font-size: 16px;
-    margin-top: 0.5rem;
-    border: 1px solid transparent;
-    color: #299d91;
+
+.form-actions button[type="reset"] {
+    color: var(--primary-color);
     background: white;
-    cursor: pointer;
 }
+
+.form-actions button[type="reset"]:hover {
+    background-color: var(--background-color);
+}
+
+.form-actions button[type="submit"] {
+    color: white;
+    background: var(--primary-color);
+}
+
 .form-actions button[type="submit"]:hover {
     background-color: #248179;
 }
