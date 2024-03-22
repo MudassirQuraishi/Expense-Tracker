@@ -91,7 +91,7 @@ const Expense = () => {
         document.body.removeChild(a);
     }
     return <>
-        {isFormOpen && <ExpenseForm closeHandler={closeHandler} />}
+        {isFormOpen && <ExpenseForm closeHandler={closeHandler} data-testid={"test-add-form"} />}
         {isOpen && <ExpenseCard closeHandler={expenseCloseHandler} expenseId={expenseId} />}
         <div className={`${classes.container} ${darkMode ? classes["dark-mode"] : classes["light-mode"]}`}>
             <div className={classes["expense-dashboard"]}>
@@ -113,7 +113,7 @@ const Expense = () => {
                     </div>
                     <div className={classes["expense-actions"]}>
                         <button onClick={downloadHandler}>Download Expenses</button>
-                        <button onClick={() => setIsFormOpen(true)}>Add Expense</button>
+                        <button onClick={() => setIsFormOpen(true)} data-testid={"test-add-expense"} >Add Expense</button>
                     </div>
                 </div>
             </div>

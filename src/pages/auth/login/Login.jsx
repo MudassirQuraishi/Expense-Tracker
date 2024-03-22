@@ -123,7 +123,7 @@ const Login = () => {
     };
 
     return (
-        <div className={classes.wrapper}>
+        <div className={classes.wrapper} data-testid={"test-login"}>
             <div className={classes['outer-container']}>
                 <div className={classes['inner-container']}>
                     <div className={classes.title}>
@@ -134,12 +134,12 @@ const Login = () => {
                             <div className={`${classes['form-control']} ${classes['tooltip-container']}`}>
                                 <div className={`${classes['form-group']} ${errors.email && classes.error}`}>
                                     <label htmlFor="">Email</label>
-                                    <input type="email" placeholder="Enter your email" ref={emailRef} onBlur={validateEmail} />
+                                    <input type="email" placeholder="Enter your email" ref={emailRef} onBlur={validateEmail} data-testid={"email-test-login"} />
                                     {errors.email && <Tooltip message={tooltip.email} />}
                                 </div>
                                 <div className={`${classes['form-group']} ${classes["password"]} ${errors.password && classes.error}`}>
                                     <label htmlFor="">Password  <Link to={'/forgot-password'}> <span>ForgotPassword?</span></Link></label>
-                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} />
+                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} data-testid={"password-test-login"} />
                                     {passwordCriteria}
                                     {errors.password && < Tooltip message={tooltip.password} />}
                                 </div>

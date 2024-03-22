@@ -109,7 +109,7 @@ const Signup = () => {
     };
 
     return (
-        <div className={classes.wrapper}>
+        <div className={classes.wrapper} data-testid={"test-signup"}>
             <div className={classes['outer-container']}>
                 <div className={classes['inner-container']}>
                     <div className={classes.title}>
@@ -120,26 +120,26 @@ const Signup = () => {
                             <div className={`${classes['form-control']} ${classes['tooltip-container']}`}>
                                 <div className={`${classes['form-group']} ${errors.email && classes.error}`}>
                                     <label htmlFor="">Email</label>
-                                    <input type="email" placeholder="Enter your email" ref={emailRef} onBlur={validateEmail} />
+                                    <input type="email" placeholder="Enter your email" ref={emailRef} onBlur={validateEmail} data-testid={"email-test"} />
                                     {errors.email && <Tooltip message={tooltip.email} />}
                                 </div>
                                 <div className={`${classes['form-group']} ${errors.password && classes.error}`}>
                                     <label htmlFor="">Password</label>
-                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} />
+                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} data-testid={"password-test"} />
                                     {passwordCriteria}
                                     {errors.password && < Tooltip message={tooltip.password} />}
                                 </div>
                                 <div className={`${classes['form-group']} ${errors.check && classes.error}`}>
                                     <label htmlFor="">Confirm Password</label>
-                                    <input type="text" placeholder="Re-enter your password" ref={checkRef} onBlur={checkPassword} />
+                                    <input type="text" placeholder="Re-enter your password" ref={checkRef} onBlur={checkPassword} data-testid={"confirm-password-test"} />
                                     {errors.check && <Tooltip message={tooltip.check} />}
                                 </div>
                             </div>
-                            <div className={`${classes['form-actions']} ${errors.final && classes.error}`} >
+                            <div className={`${classes['form-actions']} ${errors.final && classes.error}`}  >
                                 <p>
                                     By continuing, you agree to our <span>terms of service</span>
                                 </p>
-                                <button onClick={handleSubmit} disabled={errors.email || errors.password || errors.check}>Signup</button>
+                                <button onClick={handleSubmit} disabled={errors.email || errors.password || errors.check} data-testid={"test-signup-button"}>Signup</button>
                             </div>
                         </div>
                     </div>
