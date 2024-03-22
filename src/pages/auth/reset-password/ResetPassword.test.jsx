@@ -1,65 +1,40 @@
 import { describe, expect, it } from "vitest";
-import Signup from "./Signup";
-import { render, screen, fireEvent } from '@testing-library/react';
+import ResetPassword from "./ResetPassword";
+import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../../../utilities/redux-store/store';
-// import userEvent from "@testing-library/user-event"
+import store from '../../../utilities/redux-store/store'
 
-describe("Signup", () => {
-    it("renders email input field", () => {
-        render(
-            <Provider store={store}>
-                <Router>
-                    <Signup />
-                </Router>
-            </Provider>
-        );
-        expect(screen.getByTestId("email-test")).toBeInTheDocument();
-    });
-
+describe("Login", () => {
     it("renders password input field", () => {
         render(
             <Provider store={store}>
                 <Router>
-                    <Signup />
+                    <ResetPassword />
                 </Router>
             </Provider>
         );
-        expect(screen.getByTestId("password-test")).toBeInTheDocument();
-    });
-
+        expect(screen.getByTestId("password-test-reset")).toBeInTheDocument();
+    })
     it("renders confirm password input field", () => {
         render(
             <Provider store={store}>
                 <Router>
-                    <Signup />
+                    <ResetPassword />
                 </Router>
             </Provider>
         );
-        expect(screen.getByTestId("confirm-password-test")).toBeInTheDocument();
+        expect(screen.getByTestId("confirm-password-test-reset")).toBeInTheDocument();
     });
-    it("validates user entered email", () => {
-        render(<Provider store={store}>
-            <Router>
-                <Signup />
-            </Router>
-        </Provider>);
 
-        const emailInput = screen.getByTestId("email-test");
-        fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-
-        expect(emailInput.value).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-        expect(emailInput).toHaveValue("test@example.com")
-    });
     it("validates user entered password", () => {
         render(<Provider store={store}>
             <Router>
-                <Signup />
+                <ResetPassword />
             </Router>
         </Provider>);
 
-        const passwordInput = screen.getByTestId("password-test");
+        const passwordInput = screen.getByTestId("password-test-reset");
         fireEvent.change(passwordInput, { target: { value: "Password123!" } });
 
         expect(passwordInput.value).toMatch(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
@@ -69,12 +44,12 @@ describe("Signup", () => {
     it("confirms user entered password", () => {
         render(<Provider store={store}>
             <Router>
-                <Signup />
+                <ResetPassword />
             </Router>
         </Provider>);
 
-        const passwordInput = screen.getByTestId("password-test");
-        const confirmPasswordInput = screen.getByTestId("confirm-password-test");
+        const passwordInput = screen.getByTestId("password-test-reset");
+        const confirmPasswordInput = screen.getByTestId("confirm-password-test-reset");
         fireEvent.change(passwordInput, { target: { value: "Password123!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Password123!" } });
 
@@ -84,5 +59,4 @@ describe("Signup", () => {
         expect(confirmPasswordInput).toHaveValue(passwordInput.value);
     });
 
-
-});
+})

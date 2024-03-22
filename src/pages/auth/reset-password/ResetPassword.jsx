@@ -106,13 +106,13 @@ const ResetPassword = () => {
                             <div className={`${classes['form-control']} ${classes['tooltip-container']}`}>
                                 <div className={`${classes['form-group']} ${errors.password && classes.error}`}>
                                     <label htmlFor="">Password</label>
-                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} />
+                                    <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} data-testid={"password-test-reset"} />
                                     {passwordCriteria}
                                     {errors.password && < Tooltip message={tooltip.password} />}
                                 </div>
                                 <div className={`${classes['form-group']} ${errors.check && classes.error}`}>
                                     <label htmlFor="">Confirm Password</label>
-                                    <input type="text" placeholder="Re-enter your password" ref={checkRef} onBlur={checkPassword} />
+                                    <input type="text" placeholder="Re-enter your password" ref={checkRef} onBlur={checkPassword} data-testid={"confirm-password-test-reset"} />
                                     {errors.check && <Tooltip message={tooltip.check} />}
                                 </div>
                             </div>

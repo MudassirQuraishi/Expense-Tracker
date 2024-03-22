@@ -121,18 +121,18 @@ const Signup = () => {
                                 <div className={`${classes['form-group']} ${errors.email && classes.error}`}>
                                     <label htmlFor="">Email</label>
                                     <input type="email" placeholder="Enter your email" ref={emailRef} onBlur={validateEmail} data-testid={"email-test"} />
-                                    {errors.email && <Tooltip message={tooltip.email} />}
+                                    {errors.email && <Tooltip message={tooltip.email} data-testid={"tooltip-email"} />}
                                 </div>
                                 <div className={`${classes['form-group']} ${errors.password && classes.error}`}>
                                     <label htmlFor="">Password</label>
                                     <input type="password" placeholder="Enter your password" ref={passwordRef} onBlur={validatePassword} data-testid={"password-test"} />
                                     {passwordCriteria}
-                                    {errors.password && < Tooltip message={tooltip.password} />}
+                                    {errors.password && < Tooltip message={tooltip.password} data-testid={"tooltip-password"} />}
                                 </div>
                                 <div className={`${classes['form-group']} ${errors.check && classes.error}`}>
                                     <label htmlFor="">Confirm Password</label>
                                     <input type="text" placeholder="Re-enter your password" ref={checkRef} onBlur={checkPassword} data-testid={"confirm-password-test"} />
-                                    {errors.check && <Tooltip message={tooltip.check} />}
+                                    {errors.check && <Tooltip message={tooltip.check} data-testid={"tooltip-check"} />}
                                 </div>
                             </div>
                             <div className={`${classes['form-actions']} ${errors.final && classes.error}`}  >
