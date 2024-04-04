@@ -4,11 +4,9 @@ import { toast } from 'sonner'
 
 import classes from './Navbar.module.css'
 import { PiSquaresFour } from "react-icons/pi";
-import { CiWallet } from "react-icons/ci";
-import { HiArrowsRightLeft } from "react-icons/hi2";
-import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+
 import { GrMoney } from "react-icons/gr";
-import { GoGoal } from "react-icons/go";
+
 import { RiSettings4Line } from "react-icons/ri";
 import { PiDotsThreeOutlineVertical } from "react-icons/pi";
 import { IoIosLogOut } from "react-icons/io";
@@ -50,16 +48,10 @@ const Navbar = () => {
                         }`} onClick={() => handleLinkClick('Overview')}>
                         <PiSquaresFour /><Link to={'/'} >Overview</Link>
                     </li>
-                    <li className={`${classes['menu-link']} ${activeLink === 'Balances' ? classes.active : ''
-                        }`} onClick={() => handleLinkClick('Balances')}><CiWallet />Balances</li>
-                    <li className={`${classes['menu-link']} ${activeLink === 'Transactions' ? classes.active : ''
-                        }`} onClick={() => handleLinkClick('Transactions')}><HiArrowsRightLeft />Transactions</li>
-                    <li className={`${classes['menu-link']} ${activeLink === 'Bills' ? classes.active : ''
-                        }`} onClick={() => handleLinkClick('Bills')}><LiaFileInvoiceDollarSolid />Bills</li>
+
                     <li className={`${classes['menu-link']} ${activeLink === 'Expenses' ? classes.active : ''
                         }`} onClick={() => handleLinkClick('Expenses')}><GrMoney /><Link to={'/expenses'}>Expenses</Link> </li>
-                    <li className={`${classes['menu-link']} ${activeLink === 'Goals' ? classes.active : ''
-                        }`} onClick={() => handleLinkClick('Goals')}><GoGoal />Goals</li>
+
                     <li className={`${classes['menu-link']} ${activeLink === 'Settings' ? classes.active : ''
                         }`} onClick={() => handleLinkClick('Settings')}><RiSettings4Line /> <Link to={'/settings'}>Settings</Link> </li>
                 </ul>

@@ -50,7 +50,8 @@ describe("Login", () => {
 
         expect(passwordInput.value).toMatch(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
         expect(passwordInput).toHaveValue("Password123!");
-
     });
+
+
 
 })
